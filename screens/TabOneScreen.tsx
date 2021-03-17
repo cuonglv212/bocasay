@@ -11,12 +11,13 @@ import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import EditScreenInfo from '../components/EditScreenInfo';
+import Header from '../components/header';
 import { Text, View } from '../components/Themed';
 
 const Item = ({ item }) => {
   const navigation = useNavigation()
   const onClickItem = () => {
-    navigation.navigate('TabTwo')
+    navigation.navigate('TabTwoScreen', {char_id: item.char_id})
   }
   return (
     <TouchableOpacity
@@ -69,7 +70,6 @@ export default function TabOneScreen() {
 
   const loadCharacter = async (page) => {
     setIsLoadMore(true)
-    console.log('CALL page number', page)
     const response = await getAPI<Array<character>>(`https://breakingbadapi.com/api/characters?limit=10&offset=${10*page}`);
     const results = await response;
     if (results) {
@@ -132,15 +132,7 @@ export default function TabOneScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.container_header}>
-        <TouchableOpacity>
-          <Text style={styles.title}>Back</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Character list</Text>
-        <TouchableOpacity>
-          <Text style={styles.title}>Menu</Text>
-        </TouchableOpacity>
-      </View>
+      <Header/>
       { isLoading ?
         loadingView()
         :

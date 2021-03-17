@@ -13,5 +13,7 @@ export type TabOneParamList = {
 };
 
 export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+  TabTwoScreen: {
+    char_id: undefined
+  };
 };
