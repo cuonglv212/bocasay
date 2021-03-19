@@ -15,51 +15,33 @@ import {
   PlaceholderLine,
   Fade
 } from "rn-placeholder";
+import { useDispatch, useSelector } from 'react-redux'
+import Character from '../model/character';
+import { getCharacterDetail } from '../actions/characterActions';
 
 export default function TabTwoScreen() {
+  const counter = useSelector((state: any) => state.characterReducers)
   const navigation = useNavigation()
   const route = useRoute<RouteProp<TabTwoParamList, 'TabTwoScreen'>>();
   const char_id = 1
   //  route.params.char_id
-  console.log(route)
-  interface character {
-    char_id: string,
-    name: string,
-    birthday: string,
-    occupation: Array<string>[],
-    img: string,
-    status: string,
-    nickname: string,
-    appearance: Array<string>[],
-    portrayed: string,
-    category: string,
-    better_call_saul_appearance: Array<number>[]
-  }
-
-  const [detailCharacter, setDetailCharacter] = React.useState<character>(Object);
+  // const [detailCharacter, setDetailCharacter] = React.useState<Character>(Object);
   const [isLoading, setLoading] = React.useState<boolean>(true)
+
+  const characterReducers = useSelector((state: any)=> state.characterReducers)
+  const detailCharacter = characterReducers.detail || {}
+  const dispatch = useDispatch()
 
   React.useEffect(() => {
     getDetailCharacter(char_id)
   }, [char_id])
 
-  async function getAPI<T>(
-    request: RequestInfo
-  ): Promise<T> {
-    const response = await fetch(request);
-    const body = await response.json();
-    return body;
-  }
+  React.useEffect(() => {
+    if (isLoading && detailCharacter !== {}) setLoading(false);
+  }, [detailCharacter]);
 
   const getDetailCharacter = async (char_id) => {
-    // setIsLoadMore(true)
-    const response = await getAPI<Array<character>>(`https://breakingbadapi.com/api/characters/${char_id}`);
-    const results = await response;
-    if (results.length > 0) {
-      setDetailCharacter(results[0]);
-      if (isLoading) setLoading(false);
-      // setIsLoadMore(false)
-    }
+    dispatch(getCharacterDetail(char_id))
   };
 
   const detailSkeleton = () => (
@@ -107,6 +89,13 @@ export default function TabTwoScreen() {
           />
           <Text style={styles.title}>{detailCharacter.name}</Text>
           <Text style={styles.title}>{detailCharacter.nickname}</Text>
+          <Text style={styles.title}>{detailCharacter.status}</Text>
+          <Text style={styles.title}>{detailCharacter.portrayed}</Text>
+          {detailCharacter?.occupation?.map((item, index)=><Text key={index} style={styles.title}>{item}</Text>)}
+          <Text style={styles.title}>{detailCharacter.category}</Text>
+          <Text style={styles.title}>{detailCharacter.birthday}</Text>
+          {detailCharacter?.better_call_saul_appearance?.map((item, index)=><Text key={index} style={styles.title}>{item}</Text>)}
+          
           <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
           {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
           <TouchableOpacity
