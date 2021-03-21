@@ -4,7 +4,9 @@ const initialState = {
         isLoadingData: false,
         isLoadingDetail: false,
         data: [],
-        detail: {}
-    }
+        detail: {},
+        quote: {}
+    },
+    error: ''
 }
 export default initialState

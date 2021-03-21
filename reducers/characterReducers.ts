@@ -6,12 +6,15 @@ import {
     FETCH_CHARACTER_REQUEST,
     FETCH_CHARACTER_SUCCESS,
     FETCH_CHARACTER_ERROR,
+    FETCH_QUOTE_ERROR,
+    FETCH_QUOTE_SUCCESS,
+    FETCH_QUOTE_REQUEST,
+    RESET_DETAIL,
 } from '../constants/actionType';
 import initialState from "../constants/initialState"
 
 
-// bắt từng action type
-function exampleReducers(state = initialState.character, payload) {
+function characterReducers(state = initialState.character, payload) {
     switch (payload.type) {
         case FETCH_LIST_CHARACTER_REQUEST:
             return {
@@ -50,9 +53,29 @@ function exampleReducers(state = initialState.character, payload) {
                 data: {}
             };
 
+        case FETCH_QUOTE_REQUEST:
+            return {
+                ...state,
+            };
+        case FETCH_QUOTE_SUCCESS:
+            return {
+                ...state,
+                quote: payload.data
+            };
+        case FETCH_QUOTE_ERROR:
+            return {
+                ...state,
+                quote: {}
+            };
+
+        case RESET_DETAIL:
+            return {
+                ...state,
+                detail: {}
+            };
         default:
             return state;
     }
 }
 
-export default exampleReducers;
+export default characterReducers;

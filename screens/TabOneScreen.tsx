@@ -108,7 +108,7 @@ export default function TabOneScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header title=""/>
+      <Header title="Character list"/>
       { isLoading ?
         loadingView()
         :

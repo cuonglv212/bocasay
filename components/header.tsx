@@ -4,19 +4,25 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { Text, View } from '../components/Themed';
 
-export default function Header ({title}) {
+export default function Header ({title, onPressLeft, onPressRight}) {
     return (
         <View style={styles.container_header}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={onPressLeft}>
                 <Text style={styles.title}>Back</Text>
             </TouchableOpacity>
-            <Text style={styles.title}>Character list</Text>
-            <TouchableOpacity>
+            <Text style={styles.title}>{title}</Text>
+            <TouchableOpacity onPress={onPressRight}>
                 <Text style={styles.title}>Menu</Text>
             </TouchableOpacity>
         </View>
     )
 }
+
+Header.defaultProps = {
+    title: "default"
+    , onPressLeft: ()=>{}
+    , onPressRight: ()=>{}
+  };
 
 const styles = StyleSheet.create({
     container_header: {

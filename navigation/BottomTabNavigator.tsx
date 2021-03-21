@@ -5,9 +5,10 @@ import * as React from 'react';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+import CommentsScreen from '../screens/CommentsSreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import { BottomTabParamList, CommentsParamList, TabOneParamList, TabTwoParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -59,10 +60,16 @@ export function TabOneNavigator() {
         component={TabTwoScreen}
         options={{ headerTitle: 'Tab Two Title', headerShown: false }}
       />
+      <CommentsStack.Screen
+        name="CommentsScreen"
+        component={CommentsScreen}
+        options={{ headerTitle: 'Comment', headerShown: false }}
+      />
     </TabOneStack.Navigator>
   );
 }
 
+const CommentsStack = createStackNavigator<CommentsParamList>();
 const TabTwoStack = createStackNavigator<TabTwoParamList>();
 
 function TabTwoNavigator() {

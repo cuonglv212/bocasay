@@ -17,3 +17,9 @@ export type TabTwoParamList = {
     char_id: undefined
   };
 };
+
+export type CommentsParamList = {
+  CommentsScreen: {
+    char_id: undefined
+  };
+};
